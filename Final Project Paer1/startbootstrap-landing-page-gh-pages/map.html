@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px; /* The height is 400 pixels */
+            width: 100%; /* The width is the width of the web page */
+        }
+    </style>
+</head>
+<body>
+    <h3>My Google Maps Demo</h3>
+    <!--The div element for the map -->
+    <div id="map"></div>
+    <script>
+// Initialize and add the map
+function initMap() {
+  // The location of Uluru
+  var locations = [
+      ['Uganda', 1.0,32.0, 4],
+      ['Ethiopia', 8.0,38.0, 5],
+      ['Haiti', 19.0,-72.41666666, 2],
+      ['Democratic Republic of Congo', -1.0,15.0],
+      ['India', 20.0,77.0],
+      ['Venezuela', 8.0,-66.0],
+      ['Palestine', 31.9,35.2]
+    ];
+var locationInfo = [
+     "<h1>Uganda</h1><p><ul><li>More than half live in poverty without reliable access to food.</li><li>Over 4,500 children under 5 die a year from diarrhea.</li> <li>23.8 million people don't have clean water</li><li>8 in every ten people don't have a decent toilet.</li></p><p><a href='https://volunteertherealuganda.com/support-us/'>How Can You Help</a></p>", "<h1>Ethiopia</h1><p><ul><li>Agriculture makes up 80% of the population, however droughts have been causing major problems.</li><li> With an estimated population of 86 million people, 78% of Ethiopians struggle with an income below 2 US dollars a day.</li><li>The average life expectancy of the average Ethiopian was 59 years old in 2011.</li><li>For every 1,000 children five years old and younger, there are 166 deaths.</li><li>Preventable diseases, including Malaria, account for at least 60% of health problems in the country.</li><li>Almost two-thirds of its people are illiterate.</li></ul></p><p><a href='https://www.globalgiving.org/search/?size=10&sortField=sortorder&selectedCountries=00ethiop'>How Can You Help</a></p>", "<h1>Haiti</h1><p><ul><li>The life expectancy is 63 years</li><li>The mortality rate includes the death of every 67 per 1,000 children under the age of five.<li>There is a 2.1% adult prevalence of HIV.</li><li>There are 188 per 100,000 accounts of tuberculosis.</li><li>59% of the population are living under the poverty line.</li></p><p><a href='https://www.pih.org/pages/donate/give-today'>How You Can Help</a></p>","<h1>Democratic Republic of Congo</h1><p><ul><li>47% of children under the age of five and 38%of women suffer from anaemia</li><li>More than half a million pregnant or breastfeeding women suffer from acute malnutrition</li><li>Almost half of the country's children under five are stunted(short for their age).</li><li>Most of the country's 6.7 million hungry people live in five conflict-affected provinces in the eastern part of the counrty.</li><p><a href='https://donate.unhcr.org/int-en/democratic-republic-congo'>How Can You Help</a></p>", "<h1>India</h1><p><ul><li>12% of children are forced to work instead of going to school.</li><li>There are children working in coal mines, factories and selling food on the streets.</li><li>India has the highest child mortality rate( 48 out of 1000 of children die before they turn five).</li><li>Only 59% of girls 15 and older are literate.</li><li>20% of school-age children are out of school.</li><li>22% of people live in poverty.</li><p><a href='https://www.savethechildren.org/us/what-we-do/where-we-work/asia/india?cid=Paid_Search:Google_Grant:LP_WhereWeWork:Nonbrand:032918'>How Can You Help</a></p>", "<h1>Venezuela</h1><p><ul><li>In 2018, 34 children have died of malnutrition in just two and a half months.</li><li>Diphtheria has been drastically increasing week by week.</li><li>Humanitarian crisis has taken over Venezuela and health of the people is at risk everyday.</li><p><a href='https://www.cuatroporvenezuela.org/'>How Can You Help</a></p>","<h1>Palestine</h1><p><ul><li>As of 2018 over 90% of drinking water has been contaminated due to a lack of a proper filtration center.</li><li>Youth employment is at a 58% and is putting many at risk of never achieving self-sustainability.</li><li> A resurgence of violence in Gaza has left dozens dead and thousands injured.</li><li>Over one million people in Palestine are food insecure.In addition, continued violence throughout Palestine has severely affected the most vulnerable section of the population; the children.</li><li>Many children continue to suffer psychological trauma.</li><p><a href='http://irusa.org/palestine/?gclid=Cj0KCQjwk_TbBRDsARIsAALJSOat70TVMg5vIHSoWjYre-JHDUCn3etqmhSsThFLt7LkgkB40MYZdAUaAv3UEALw_wcB'>How Can You Help</a></p>"
+]
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 2,
+      center: new google.maps.LatLng(1.0,32.0),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    var infowindow = new google.maps.InfoWindow();
+    var marker, i;
+    for (i = 0; i < locations.length; i++) {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+          var country = locations[i][0];
+          document.getElementById("info").innerHTML = locationInfo[i];
+        }
+      })(marker, i));
+}}
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+  -->
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLt5RI34putGZNhgQha-2ehMYzQTforMo&callback=initMap">
+    </script>
+    <div id="info">
+    </div>
+</body>
+</html>
